@@ -1,0 +1,26 @@
+{
+  "name": "news-aggregator",
+  "version": "1.0.0",
+  "description": "News aggregator for Hacker News.",
+  "homepage": "https://github.com/guti7/news-aggregator",
+  "author": "guti7",
+  "repository": "https://github.com/guti7/news-aggregator",
+  "license": "MIT",
+
+  "engines": {
+    "node": ">= 0.10"
+  },
+
+  "keywords": [
+    "news",
+    "aggregator",
+    "udacity",
+    "hacker news",
+    "tool",
+    "test"
+  ],
+  
+  "devDependencies": {
+    "gulp": "^4.0.0"
+  }
+}
