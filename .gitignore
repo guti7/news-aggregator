@@ -1,2 +1,4 @@
 .DS_Store
 ngrok
+node_modules
+/dist
