@@ -111,7 +111,7 @@ APP.Main = (function() {
     // var storyDetails = $('sd-' + details.id);
 
     // Wait a little time then show the story details.
-    setTimeout(showStory.bind(this, details.id), 60);
+    // setTimeout(showStory.bind(this, details.id), 60);
 
     // Create and append the story. A visual change...
     // perhaps that should be in a requestAnimationFrame?
@@ -168,24 +168,29 @@ APP.Main = (function() {
         });
       }
     // }
-
+    showStory(details.id);
   }
 
   function showStory(id) {
-
-    if (inDetails)
+    
+    if(!storyDetails)
       return;
+    storyDetails.classList.add('visible');
+    storyDetails.classList.remove('hidden');
 
-    inDetails = true;
-
-    var storyDetails = $('#sd-' + id);
-    var left = null;
-
-    if (!storyDetails)
-      return;
-
-    document.body.classList.add('details-active');
-    storyDetails.style.opacity = 1;
+    // if (inDetails)
+    //   return;
+    // 
+    // inDetails = true;
+    // 
+    // var storyDetails = $('#sd-' + id);
+    // var left = null;
+    // 
+    // if (!storyDetails)
+    //   return;
+    // 
+    // document.body.classList.add('details-active');
+    // storyDetails.style.opacity = 1;
 
     function animate () {
 
@@ -214,19 +219,22 @@ APP.Main = (function() {
     // every few milliseconds. That's going to keep
     // it all tight. Or maybe we're doing visual changes
     // and they should be in a requestAnimationFrame
-    setTimeout(animate, 4);
+    // setTimeout(animate, 4);
   }
 
   function hideStory(id) {
+    
+    storyDetails.classList.add('hidden');
+    storyDetails.classList.remove('visible');
 
-    if (!inDetails)
-      return;
-
-    var storyDetails = $('#sd-' + id);
-    var left = 0;
-
-    document.body.classList.remove('details-active');
-    storyDetails.style.opacity = 0;
+    // if (!inDetails)
+    //   return;
+    // 
+    // var storyDetails = $('#sd-' + id);
+    // var left = 0;
+    // 
+    // document.body.classList.remove('details-active');
+    // storyDetails.style.opacity = 0;
 
     function animate () {
 
@@ -255,7 +263,7 @@ APP.Main = (function() {
     // every few milliseconds. That's going to keep
     // it all tight. Or maybe we're doing visual changes
     // and they should be in a requestAnimationFrame
-    setTimeout(animate, 4);
+    // setTimeout(animate, 4);
   }
 
   /**
@@ -295,15 +303,15 @@ APP.Main = (function() {
     }
   }
 
-  main.addEventListener('touchstart', function(evt) {
-
-    // I just wanted to test what happens if touchstart
-    // gets canceled. Hope it doesn't block scrolling on mobiles...
-    // if (Math.random() > 0.97) {
-    //   evt.preventDefault();
-    // }
-
-  });
+  // main.addEventListener('touchstart', function(evt) {
+  // 
+  //   // I just wanted to test what happens if touchstart
+  //   // gets canceled. Hope it doesn't block scrolling on mobiles...
+  //   // if (Math.random() > 0.97) {
+  //   //   evt.preventDefault();
+  //   // }
+  // 
+  // });
 
   main.addEventListener('scroll', function() {
 
@@ -311,8 +319,6 @@ APP.Main = (function() {
     var headerTitles = header.querySelector('.header__title-wrapper');
     var scrollTopCapped = Math.min(70, main.scrollTop);
     var scaleString = 'scale(' + (1 - (scrollTopCapped / 300)) + ')';
-
-    // colorizeAndScaleStories();
 
     header.style.height = (156 - scrollTopCapped) + 'px';
     headerTitles.style.webkitTransform = scaleString;
@@ -367,8 +373,8 @@ APP.Main = (function() {
   // Bootstrap in the stories.
   APP.Data.getTopStories(function(data) {
     stories = data;
-    loadStoryBatch();
-    // requestAnimationFrame(loadStoryBatch);
+    // loadStoryBatch();
+    requestAnimationFrame(loadStoryBatch);
     main.classList.remove('loading');
   });
 
