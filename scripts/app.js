@@ -47,6 +47,10 @@ APP.Main = (function() {
     tmplStoryDetails = tmplStoryDetails.replace(intlRelative, '');
     tmplStoryDetailsComment = tmplStoryDetailsComment.replace(intlRelative, '');
   }
+  
+  var storyDetails = document.createElement('section');
+  storyDetails.classList.add('story-details');
+  ocument.body.appendChild(storyDetails);
 
   var storyTemplate =
       Handlebars.compile(tmplStory);
@@ -65,28 +69,41 @@ APP.Main = (function() {
 
     // This seems odd. Surely we could just select the story
     // directly rather than looping through all of them.
-    var storyElements = document.querySelectorAll('.story');
+    
+    var story = document.querySelector('.story#s-' + key);
+    details.time *= 1000;
+    var html = storyTemplate(details);
+    story.innerHTML = html;
+    story.addEventListener('click', onStoryClick.bind(this, details));
+    story.classList.add('clickable');
+    
+    // Tick down. When zero we can batch in the next load.
+    storyLoadCount--;
+    
+    
+    // var storyElements = document.querySelectorAll('.story');
 
-    for (var i = 0; i < storyElements.length; i++) {
-
-      if (storyElements[i].getAttribute('id') === 's-' + key) {
-
-        details.time *= 1000;
-        var story = storyElements[i];
-        var html = storyTemplate(details);
-        story.innerHTML = html;
-        story.addEventListener('click', onStoryClick.bind(this, details));
-        story.classList.add('clickable');
-
-        // Tick down. When zero we can batch in the next load.
-        storyLoadCount--;
-
-      }
-    }
+    // for (var i = 0; i < storyElements.length; i++) {
+    // 
+    //   if (storyElements[i].getAttribute('id') === 's-' + key) {
+    // 
+    //     details.time *= 1000;
+    //     var story = storyElements[i];
+    //     var html = storyTemplate(details);
+    //     story.innerHTML = html;
+    //     story.addEventListener('click', onStoryClick.bind(this, details));
+    //     story.classList.add('clickable');
+    // 
+    //     // Tick down. When zero we can batch in the next load.
+    //     storyLoadCount--;
+    // 
+    //   }
+    // }
+    
 
     // Colorize on complete.
-    if (storyLoadCount === 0)
-      colorizeAndScaleStories();
+    // if (storyLoadCount === 0)
+    //   colorizeAndScaleStories();
   }
 
   function onStoryClick(details) {
@@ -98,9 +115,6 @@ APP.Main = (function() {
 
     // Create and append the story. A visual change...
     // perhaps that should be in a requestAnimationFrame?
-    // And maybe, since they're all the same, I don't
-    // need to make a new element every single time? I mean,
-    // it inflates the DOM and I can only see one at once.
     if (!storyDetails) {
 
       if (details.url)
@@ -117,12 +131,8 @@ APP.Main = (function() {
         by: '', text: 'Loading comment...'
       });
 
-      storyDetails = document.createElement('section');
       storyDetails.setAttribute('id', 'sd-' + details.id);
-      storyDetails.classList.add('story-details');
       storyDetails.innerHTML = storyDetailsHtml;
-
-      document.body.appendChild(storyDetails);
 
       commentsElement = storyDetails.querySelector('.js-comments');
       storyHeader = storyDetails.querySelector('.js-header');
@@ -289,9 +299,9 @@ APP.Main = (function() {
 
     // I just wanted to test what happens if touchstart
     // gets canceled. Hope it doesn't block scrolling on mobiles...
-    if (Math.random() > 0.97) {
-      evt.preventDefault();
-    }
+    // if (Math.random() > 0.97) {
+    //   evt.preventDefault();
+    // }
 
   });
 
