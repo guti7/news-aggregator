@@ -4,7 +4,7 @@
   "description": "News aggregator for Hacker News.",
   "homepage": "https://github.com/guti7/news-aggregator",
   "author": "guti7",
-  "repository": "https://github.com/guti7/news-aggregator",
+  "repository": "https://github.com/guti7/news-aggregator.git",
   "license": "MIT",
 
   "engines": {
