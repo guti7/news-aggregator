@@ -50,7 +50,7 @@ APP.Main = (function() {
   
   var storyDetails = document.createElement('section');
   storyDetails.classList.add('story-details');
-  ocument.body.appendChild(storyDetails);
+  document.body.appendChild(storyDetails);
 
   var storyTemplate =
       Handlebars.compile(tmplStory);
@@ -108,14 +108,14 @@ APP.Main = (function() {
 
   function onStoryClick(details) {
 
-    var storyDetails = $('sd-' + details.id);
+    // var storyDetails = $('sd-' + details.id);
 
     // Wait a little time then show the story details.
     setTimeout(showStory.bind(this, details.id), 60);
 
     // Create and append the story. A visual change...
     // perhaps that should be in a requestAnimationFrame?
-    if (!storyDetails) {
+    // if (!storyDetails) {
 
       if (details.url)
         details.urlobj = new URL(details.url);
@@ -167,7 +167,7 @@ APP.Main = (function() {
               localeData);
         });
       }
-    }
+    // }
 
   }
 
